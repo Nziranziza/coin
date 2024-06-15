@@ -1,16 +1,31 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { primaryColor } from '@/constants/Colors'
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
-export default function Dot() {
-    const [dotActive, setdotActive]  = useState(true)
+import { primaryColor } from "@/constants/Colors";
+
+type DotProps = {
+  active?: boolean;
+};
+
+export default function Dot({ active }: DotProps) {
   return (
-    <View>
-      {
-        dotActive? (<View style={{width: 35, height: 7, backgroundColor: "#4ba26a"}}></View>):(<View style={{width: 35, height: 7, backgroundColor: primaryColor}}></View>)
-      }
-    </View>
-  )
+    <View
+      style={[
+        styles.dot,
+        {
+          opacity: active ? 1 : 0.5,
+          width: active ? 13 : 10,
+          height: active ? 13 : 10,
+        },
+      ]}
+    ></View>
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  dot: {
+    borderRadius: 13,
+    backgroundColor: primaryColor,
+    margin: 5,
+  },
+});
