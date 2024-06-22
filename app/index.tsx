@@ -33,7 +33,7 @@ export default function Onboard() {
         animated: true,
       });
     } else {
-      router.replace("(tabs)");
+      router.replace("phone");
     }
   };
 
