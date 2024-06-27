@@ -3,7 +3,6 @@ module.exports = {
   extends: ["expo", "prettier"],
   plugins: ["prettier"],
   rules: {
-    "prettier/prettier": "error",
     "no-console": "warn",
     "import/order": [
       "warn",
@@ -21,5 +20,11 @@ module.exports = {
       },
     ],
     "eol-last": ["error", "always"],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
 };

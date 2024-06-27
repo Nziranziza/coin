@@ -1,19 +1,25 @@
-import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "expo-router";
-import { SafeAreaView, Platform, StyleSheet, StatusBar, View, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
+import {
+  SafeAreaView,
+  Platform,
+  StyleSheet,
+  StatusBar,
+  View,
+  TouchableOpacity,
+} from "react-native";
+
 import Button from "@/components/button";
 import Text from "@/components/text";
-import { primaryColor } from "@/constants/Colors";
-import { router } from "expo-router";
 import TextInputWithLabel from "@/components/TextInput";
-
+import { primaryColor } from "@/constants/Colors";
 
 const isAndroid = Platform.OS === "android";
 
-export default function singUp() {
+export default function SignUp() {
   const navigation = useNavigation();
   const [password, setPassword] = useState("");
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -21,13 +27,11 @@ export default function singUp() {
     });
   }, [navigation]);
 
-  
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text weight="700" style={[styles.title, { color: primaryColor }]}>
-         Your new password
+          Your new password
         </Text>
 
         <TextInputWithLabel label="Your phone number" />
@@ -37,10 +41,13 @@ export default function singUp() {
           value={password}
           onChangeText={setPassword}
         />
-       
       </View>
-      <View>
-        <TouchableOpacity onPress={()=>{router.replace("login")}} >
+      <View style={styles.paddingbutton}>
+        <TouchableOpacity
+          onPress={() => {
+            router.replace("login");
+          }}
+        >
           <Text
             weight="600"
             style={[
@@ -51,7 +58,7 @@ export default function singUp() {
             Remember my password? Login
           </Text>
         </TouchableOpacity>
-        <Button title="Create"  />
+        <Button title="Create" />
       </View>
     </SafeAreaView>
   );
@@ -62,12 +69,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: isAndroid ? StatusBar.currentHeight : 0,
     paddingBottom: 30,
-    paddingHorizontal: 30,
   },
   content: {
     marginTop: 60,
     flex: 1,
     flexDirection: "column",
+    paddingHorizontal: 30,
   },
   title: {
     fontSize: 26,
@@ -81,9 +88,11 @@ const styles = StyleSheet.create({
     borderColor: "#A8200D",
   },
   errorText: {
-
-    fontSize:14,
+    fontSize: 14,
     color: "#A8200D",
     alignSelf: "flex-start",
+  },
+  paddingbutton: {
+    paddingHorizontal: 30,
   },
 });

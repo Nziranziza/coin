@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
-import { Feather } from '@expo/vector-icons';
-import { primaryColor, textColor } from "@/constants/Colors";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
+
+import { textColor } from "@/constants/Colors";
+
+import Eye from "./icons/eye";
 import Text from "./text";
 
 type TextInputWithLabelProps = TextInput["props"] & {
@@ -9,16 +17,27 @@ type TextInputWithLabelProps = TextInput["props"] & {
   isPassword?: boolean;
 };
 
-export default function TextInputWithLabel({ label, style, isPassword, ...props }: TextInputWithLabelProps) {
+export default function TextInputWithLabel({
+  label,
+  style,
+  isPassword,
+  ...props
+}: TextInputWithLabelProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const colorScheme = useColorScheme();
+
+  const isDarkMode = colorScheme === "dark";
+  const dynamicTextColor = isDarkMode ? "#fff" : textColor;
+  const dynamicLabelStyle = isDarkMode ? styles.labelDark : {};
 
   return (
     <View style={[styles.container, style]}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, dynamicLabelStyle]}>{label}</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          style={[styles.input, style]}
+          style={[styles.input, style, isDarkMode && styles.inputDark]}
           secureTextEntry={isPassword && !isPasswordVisible}
+          placeholderTextColor={dynamicTextColor}
           {...props}
         />
         {isPassword && (
@@ -26,7 +45,7 @@ export default function TextInputWithLabel({ label, style, isPassword, ...props 
             style={styles.iconContainer}
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
           >
-            <Feather name={isPasswordVisible ? "eye-off" : "eye"} size={24} color={textColor} />
+            <Eye />
           </TouchableOpacity>
         )}
       </View>
@@ -45,6 +64,9 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: textColor,
   },
+  labelDark: {
+    color: "#fff",
+  },
   inputContainer: {
     position: "relative",
     flexDirection: "row",
@@ -55,14 +77,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: textColor,
     borderRadius: 8,
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     fontSize: 13,
     color: "#000",
   },
+  inputDark: {
+    color: "#fff",
+    borderColor: "#fff",
+  },
   iconContainer: {
     position: "absolute",
-    right: 16,
+    right: 8,
     height: "100%",
     justifyContent: "center",
     alignItems: "center",

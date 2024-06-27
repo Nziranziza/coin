@@ -1,16 +1,23 @@
-import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "expo-router";
-import { SafeAreaView, Platform, StyleSheet, StatusBar, View, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
+import {
+  SafeAreaView,
+  Platform,
+  StyleSheet,
+  StatusBar,
+  View,
+  TouchableOpacity,
+} from "react-native";
+
 import Button from "@/components/button";
 import Text from "@/components/text";
-import { primaryColor } from "@/constants/Colors";
-import { router } from "expo-router";
 import TextInputWithLabel from "@/components/TextInput";
-
+import { primaryColor } from "@/constants/Colors";
 
 const isAndroid = Platform.OS === "android";
 
-export default function singUp() {
+export default function SignUp() {
   const navigation = useNavigation();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,8 +34,7 @@ export default function singUp() {
       setErrorMessage("Passwords must match");
     } else {
       setErrorMessage("");
-      router.replace("login")
-      
+      router.replace("login");
     }
   };
 
@@ -51,12 +57,22 @@ export default function singUp() {
           label="Confirm Password"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          style={confirmPassword && password !== confirmPassword ? styles.errorInput : null}
+          style={
+            confirmPassword && password !== confirmPassword
+              ? styles.errorInput
+              : null
+          }
         />
-        {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+        {errorMessage ? (
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        ) : null}
       </View>
-      <View>
-        <TouchableOpacity onPress={()=>{router.replace("login")}}>
+      <View style={styles.paddingbutton}>
+        <TouchableOpacity
+          onPress={() => {
+            router.replace("login");
+          }}
+        >
           <Text
             weight="600"
             style={[
@@ -78,12 +94,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: isAndroid ? StatusBar.currentHeight : 0,
     paddingBottom: 30,
-    paddingHorizontal: 30,
   },
   content: {
     marginTop: 60,
     flex: 1,
     flexDirection: "column",
+    paddingHorizontal: 30,
   },
   title: {
     fontSize: 26,
@@ -97,9 +113,11 @@ const styles = StyleSheet.create({
     borderColor: "#A8200D",
   },
   errorText: {
-
-    fontSize:14,
+    fontSize: 14,
     color: "#A8200D",
     alignSelf: "flex-start",
+  },
+  paddingbutton: {
+    paddingHorizontal: 30,
   },
 });

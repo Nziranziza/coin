@@ -1,11 +1,18 @@
-import React, { useLayoutEffect } from "react";
 import { useNavigation } from "expo-router";
-import { SafeAreaView, Platform, StyleSheet, StatusBar, View} from "react-native";
+import { router } from "expo-router";
+import React, { useLayoutEffect } from "react";
+import {
+  SafeAreaView,
+  Platform,
+  StyleSheet,
+  StatusBar,
+  View,
+} from "react-native";
+
 import Button from "@/components/button";
 import Text from "@/components/text";
-import { primaryColor } from "@/constants/Colors";
 import TextInputWithLabel from "@/components/TextInput";
-import { router } from "expo-router";
+import { primaryColor } from "@/constants/Colors";
 
 const isAndroid = Platform.OS === "android";
 
@@ -14,22 +21,25 @@ export default function Login() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-  headerShown: false,
+      headerShown: false,
     });
   }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text weight="700" style={[
-            styles.title,
-            { color:  primaryColor },
-          ]}>Enter Your Phone number</Text>
-        <TextInputWithLabel label="Your phone number"/>
-        
+        <Text weight="700" style={[styles.title, { color: primaryColor }]}>
+          Enter Your Phone number
+        </Text>
+        <TextInputWithLabel label="Your phone number" />
       </View>
-      <View>
-        <Button title="Next" onPress={() => {  router.replace("verify");}} />
+      <View style={styles.paddingbutton}>
+        <Button
+          title="Next"
+          onPress={() => {
+            router.replace("verify");
+          }}
+        />
       </View>
     </SafeAreaView>
   );
@@ -40,16 +50,18 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: isAndroid ? StatusBar.currentHeight : 0,
     paddingBottom: 30,
-    paddingHorizontal: 30,
   },
   content: {
-    marginTop:60,
+    marginTop: 60,
     flex: 1,
-    flexDirection:'column'
+    flexDirection: "column",
+    paddingHorizontal: 30,
   },
-  title:{
-    fontSize:26,
-    marginBottom:30
-}
+  title: {
+    fontSize: 26,
+    marginBottom: 30,
+  },
+  paddingbutton: {
+    paddingHorizontal: 30,
+  },
 });
-

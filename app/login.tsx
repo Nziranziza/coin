@@ -1,27 +1,31 @@
-import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "expo-router";
-import { SafeAreaView, Platform, StyleSheet, StatusBar, View, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
+import {
+  SafeAreaView,
+  Platform,
+  StyleSheet,
+  StatusBar,
+  View,
+  TouchableOpacity,
+} from "react-native";
+
 import Button from "@/components/button";
 import Text from "@/components/text";
-import { primaryColor } from "@/constants/Colors";
-import { router } from "expo-router";
 import TextInputWithLabel from "@/components/TextInput";
-
+import { primaryColor } from "@/constants/Colors";
 
 const isAndroid = Platform.OS === "android";
 
-export default function singUp() {
+export default function SignUp() {
   const navigation = useNavigation();
   const [password, setPassword] = useState("");
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, [navigation]);
-
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,7 +41,11 @@ export default function singUp() {
           value={password}
           onChangeText={setPassword}
         />
-        <TouchableOpacity onPress={()=>{router.replace("reset")}}>
+        <TouchableOpacity
+          onPress={() => {
+            router.replace("reset");
+          }}
+        >
           <Text
             weight="600"
             style={[
@@ -49,7 +57,7 @@ export default function singUp() {
           </Text>
         </TouchableOpacity>
       </View>
-      <View>
+      <View style={styles.paddingbutton}>
         <TouchableOpacity>
           <Text
             weight="600"
@@ -61,7 +69,12 @@ export default function singUp() {
             No account? Signup
           </Text>
         </TouchableOpacity>
-        <Button title="Login" onPress={()=>{router.replace("(tabs)")}}  />
+        <Button
+          title="Login"
+          onPress={() => {
+            router.replace("(tabs)");
+          }}
+        />
       </View>
     </SafeAreaView>
   );
@@ -72,12 +85,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: isAndroid ? StatusBar.currentHeight : 0,
     paddingBottom: 30,
-    paddingHorizontal: 30,
   },
   content: {
     marginTop: 60,
     flex: 1,
     flexDirection: "column",
+    paddingHorizontal: 30,
   },
   title: {
     fontSize: 26,
@@ -91,13 +104,15 @@ const styles = StyleSheet.create({
     borderColor: "#A8200D",
   },
   errorText: {
-
-    fontSize:14,
+    fontSize: 14,
     color: "#A8200D",
     alignSelf: "flex-start",
   },
-  forgot:{
+  forgot: {
     marginBottom: 30,
-    alignSelf:'flex-end'
-  }
+    alignSelf: "flex-end",
+  },
+  paddingbutton: {
+    paddingHorizontal: 30,
+  },
 });
