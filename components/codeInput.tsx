@@ -1,13 +1,9 @@
 import React, { useRef } from "react";
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Keyboard,
-  useColorScheme,
-} from "react-native";
+import { StyleSheet, View, Keyboard, useColorScheme } from "react-native";
 
 import { primaryColor } from "@/constants/Colors";
+
+import TextInput from "./TextInput";
 
 type VerificationCodeInputProps = {
   numberOfInputs?: number;
@@ -17,7 +13,7 @@ export default function VerificationCodeInput({
   numberOfInputs = 4,
 }: VerificationCodeInputProps) {
   const [code, setCode] = React.useState(Array(numberOfInputs).fill(""));
-  const inputs = useRef<(TextInput | null)[]>([]);
+  const inputs = useRef<(typeof TextInput | null)[]>([]);
   const colorScheme = useColorScheme();
 
   const handleChangeText = (text: string, index: number) => {
@@ -50,6 +46,7 @@ export default function VerificationCodeInput({
           onChangeText={(text) => handleChangeText(text, index)}
           onKeyPress={(e) => handleKeyPress(e, index)}
           ref={(ref) => (inputs.current[index] = ref)}
+          containerStyle={{ width: 50 }}
         />
       ))}
     </View>
@@ -71,7 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
     textAlign: "center",
-    width: 50,
   },
   inputDark: {
     color: "#fff",

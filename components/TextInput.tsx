@@ -1,71 +1,111 @@
-import React, { useState } from "react";
+import React, {
+  ForwardedRef,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from "react";
 import {
   StyleSheet,
-  TextInput,
+  TextInput as DefaulfTextInput,
   View,
   TouchableOpacity,
-  useColorScheme,
+  ViewStyle,
+  TextStyle,
+  TextInputProps,
 } from "react-native";
 
 import { textColor } from "@/constants/Colors";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 import Eye from "./icons/eye";
 import Text from "./text";
 
-type TextInputWithLabelProps = TextInput["props"] & {
-  label: string;
+type TextInputWithLabelProps = TextInputProps & {
+  label?: string;
   isPassword?: boolean;
+  lightColor?: string;
+  darkColor?: string;
+  containerStyle?: ViewStyle;
+  labelStyle?: TextStyle;
+  error?: string | boolean;
 };
 
-export default function TextInputWithLabel({
-  label,
-  style,
-  isPassword,
-  ...props
-}: TextInputWithLabelProps) {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const colorScheme = useColorScheme();
+const TextInput = forwardRef<DefaulfTextInput, TextInputWithLabelProps>(
+  (
+    {
+      label,
+      style,
+      isPassword,
+      lightColor,
+      darkColor,
+      containerStyle,
+      labelStyle,
+      error,
+      ...props
+    }: TextInputWithLabelProps,
+    ref: ForwardedRef<DefaulfTextInput>,
+  ) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+    const textInputRef = React.createRef<DefaulfTextInput>();
 
-  const isDarkMode = colorScheme === "dark";
-  const dynamicTextColor = isDarkMode ? "#fff" : textColor;
-  const dynamicLabelStyle = isDarkMode ? styles.labelDark : {};
+    useImperativeHandle(ref, () => textInputRef.current!);
 
-  return (
-    <View style={[styles.container, style]}>
-      <Text style={[styles.label, dynamicLabelStyle]}>{label}</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={[styles.input, style, isDarkMode && styles.inputDark]}
-          secureTextEntry={isPassword && !isPasswordVisible}
-          placeholderTextColor={dynamicTextColor}
-          {...props}
-        />
-        {isPassword && (
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+    return (
+      <View style={[styles.container, containerStyle]}>
+        {label && (
+          <Text
+            style={[
+              styles.label,
+              labelStyle,
+              error ? styles.colorDanger : null,
+            ]}
+            weight="500"
           >
-            <Eye />
-          </TouchableOpacity>
+            {label}
+          </Text>
+        )}
+        <View style={styles.inputContainer}>
+          <DefaulfTextInput
+            style={[
+              styles.input,
+              style,
+              error ? [styles.colorDanger, styles.borderDanger] : null,
+            ]}
+            secureTextEntry={isPassword && !isPasswordVisible}
+            placeholderTextColor={color}
+            ref={textInputRef}
+            {...props}
+          />
+          {isPassword && (
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            >
+              <Eye />
+            </TouchableOpacity>
+          )}
+        </View>
+        {Boolean(error) && (
+          <Text style={[styles.errorText, styles.colorDanger]}>{error}</Text>
         )}
       </View>
-    </View>
-  );
-}
+    );
+  },
+);
+
+export default TextInput;
+
+TextInput.displayName = "TextInput";
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginBottom: 16,
   },
   label: {
     marginBottom: 4,
     fontSize: 14,
     fontWeight: "500",
-    color: textColor,
-  },
-  labelDark: {
-    color: "#fff",
   },
   inputContainer: {
     position: "relative",
@@ -93,5 +133,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
+  },
+  colorDanger: {
+    color: "#A8200D",
+  },
+  borderDanger: {
+    borderColor: "#A8200D",
+    borderWidth: 2,
+  },
+  errorText: {
+    fontSize: 14,
   },
 });

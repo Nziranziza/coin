@@ -45,27 +45,25 @@ export default function SignUp() {
           Enter account details
         </Text>
 
-        <TextInputWithLabel label="Your phone number" />
+        <TextInputWithLabel
+          containerStyle={styles.input}
+          label="Your phone number"
+        />
         <TextInputWithLabel
           isPassword
           label="Your Password"
           value={password}
           onChangeText={setPassword}
+          containerStyle={styles.input}
         />
         <TextInputWithLabel
           isPassword
           label="Confirm Password"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          style={
-            confirmPassword && password !== confirmPassword
-              ? styles.errorInput
-              : null
-          }
+          containerStyle={styles.input}
+          error={errorMessage}
         />
-        {errorMessage ? (
-          <Text style={styles.errorText}>{errorMessage}</Text>
-        ) : null}
       </View>
       <View style={styles.paddingbutton}>
         <TouchableOpacity
@@ -95,6 +93,9 @@ const styles = StyleSheet.create({
     paddingTop: isAndroid ? StatusBar.currentHeight : 0,
     paddingBottom: 30,
   },
+  input: {
+    marginBottom: 40,
+  },
   content: {
     marginTop: 60,
     flex: 1,
@@ -111,11 +112,6 @@ const styles = StyleSheet.create({
   },
   errorInput: {
     borderColor: "#A8200D",
-  },
-  errorText: {
-    fontSize: 14,
-    color: "#A8200D",
-    alignSelf: "flex-start",
   },
   paddingbutton: {
     paddingHorizontal: 30,
