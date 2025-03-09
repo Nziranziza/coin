@@ -1,28 +1,32 @@
-import { View, type ViewProps } from "react-native";
+import {
+  ScrollView,
+  ScrollViewProps,
+  View,
+  type ViewProps,
+} from "react-native";
 
-import { useThemeColor } from "@/hooks/useThemeColor";
+import { cn } from "@/utils/tailwindcss";
 
-export type ThemedViewProps = ViewProps & {
-  lightColor?: string;
-  darkColor?: string;
-};
+export type ThemedViewProps = ViewProps & {};
 
-export function ThemedView({
-  style,
-  lightColor,
-  darkColor,
-  className,
-  ...otherProps
-}: ThemedViewProps) {
-  const backgroundColor = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "background",
-  );
+export type ThemedScrollViewProps = ScrollViewProps & {};
 
+export function ThemedView({ className, ...otherProps }: ThemedViewProps) {
   return (
     <View
-      style={[{ backgroundColor }, style]}
-      className={className}
+      className={cn("bg-dark-50 dark:bg-dark-900", className)}
+      {...otherProps}
+    />
+  );
+}
+
+export function ThemedScrollView({
+  className,
+  ...otherProps
+}: ThemedScrollViewProps) {
+  return (
+    <ScrollView
+      className={cn("bg-dark-50 dark:bg-dark-900", className)}
       {...otherProps}
     />
   );

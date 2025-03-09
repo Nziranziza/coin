@@ -12,7 +12,7 @@ import {
 import Button from "@/components/button";
 import Text from "@/components/text";
 import TextInputWithLabel from "@/components/TextInput";
-import { primaryColor } from "@/constants/Colors";
+import { colors } from "@/utils/tailwindcss";
 
 const isAndroid = Platform.OS === "android";
 
@@ -35,7 +35,7 @@ export default function SignUp() {
         <Text
           weight="700"
           className="text-[26px] mb-[30px]"
-          style={{ color: primaryColor }}
+          style={{ color: colors.primary[500] }}
         >
           Your new password
         </Text>
@@ -57,7 +57,7 @@ export default function SignUp() {
           <Text
             weight="600"
             className="mb-[30px] self-center underline"
-            style={{ color: primaryColor }}
+            style={{ color: colors.primary[500] }}
           >
             Remember my password? Login
           </Text>
