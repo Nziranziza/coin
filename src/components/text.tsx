@@ -1,8 +1,6 @@
 import React from "react";
 import { TextProps } from "react-native";
 
-import { useThemeColor } from "@/hooks/useThemeColor";
-
 import { ThemedText } from "./ThemedText";
 
 type CustomProps = TextProps & {
@@ -16,8 +14,6 @@ type CustomProps = TextProps & {
     | "700"
     | "800"
     | "900";
-  lightColor?: string;
-  darkColor?: string;
 };
 
 const fontFamilies = {
@@ -35,15 +31,12 @@ const fontFamilies = {
 export default function Text({
   style,
   weight = "400",
-  lightColor,
-  darkColor,
   className,
   ...props
 }: CustomProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
   return (
     <ThemedText
-      style={[{ fontFamily: fontFamilies[weight], color }, style]}
+      style={[{ fontFamily: fontFamilies[weight] }, style]}
       className={className}
       {...props}
     />

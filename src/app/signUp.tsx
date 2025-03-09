@@ -12,7 +12,7 @@ import {
 import Button from "@/components/button";
 import Text from "@/components/text";
 import TextInputWithLabel from "@/components/TextInput";
-import { primaryColor } from "@/constants/Colors";
+import { colors } from "@/utils/tailwindcss";
 import { cn } from "@/utils/tailwindcss";
 
 const isAndroid = Platform.OS === "android";
@@ -47,7 +47,7 @@ export default function SignUp() {
         <Text
           weight="700"
           className="text-2xl mb-8"
-          style={{ color: primaryColor }}
+          style={{ color: colors.primary[500] }}
         >
           Enter account details
         </Text>
@@ -83,7 +83,7 @@ export default function SignUp() {
           <Text
             weight="600"
             className="mb-8 self-center underline"
-            style={{ color: primaryColor }}
+            style={{ color: colors.primary[500] }}
           >
             Have an account? Login
           </Text>
