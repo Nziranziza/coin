@@ -9,7 +9,7 @@ type ProgressBarProps = {
   containerClassName?: string;
 };
 
-export default function ProgressBar({
+export function ProgressBar({
   progress,
   height = 5,
   className,

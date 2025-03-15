@@ -7,12 +7,16 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
 import "react-native-reanimated";
+import { useEffect } from "react";
+import { Platform } from "react-native";
+import { SheetProvider } from "react-native-actions-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { ThemedView as View } from "@/components/ThemedView";
+import { ThemedView, ThemedView as View } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import "@/components/action-sheets/config";
 
 import "../../global.css";
 
@@ -37,6 +41,7 @@ export default function RootLayout() {
     InterBold: require("../assets/fonts/Inter-Bold.ttf"),
     InterBlack: require("../assets/fonts/Inter-Black.ttf"),
   });
+  const isAndroid = Platform.OS === "android";
 
   useEffect(() => {
     if (loaded) {
@@ -49,26 +54,39 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <View className="flex-1">
-        <StatusBar
-          style={colorScheme === "dark" ? "light" : "dark"}
-          translucent
-        />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            navigationBarColor: Colors[colorScheme ?? "light"].background,
-            contentStyle: {
-              backgroundColor: Colors[colorScheme ?? "light"].background,
-            },
-          }}
-          initialRouteName="(tabs)"
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-        </Stack>
-      </View>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <SheetProvider>
+          <View className="flex-1">
+            <StatusBar
+              style={colorScheme === "dark" ? "light" : "dark"}
+              translucent
+            />
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                navigationBarColor: Colors[colorScheme ?? "light"].background,
+                contentStyle: {
+                  backgroundColor: Colors[colorScheme ?? "light"].background,
+                },
+              }}
+              initialRouteName="(tabs)"
+            >
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="index" />
+              <Stack.Screen
+                name="sendMoney"
+                options={{
+                  presentation: "modal",
+                  headerShown: isAndroid,
+                  headerTitle: "",
+                  headerBackground: () => <ThemedView className="flex-1" />,
+                }}
+              />
+            </Stack>
+          </View>
+        </SheetProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

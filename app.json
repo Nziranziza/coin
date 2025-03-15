@@ -13,20 +13,37 @@
       "backgroundColor": "#F2F2F2"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhoneNumbersUsageDescription": "This app needs access to phone calls to complete payment transactions.",
+        "LSApplicationQueriesSchemes": ["tel"]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#F2F2F2"
-      }
+      },
+      "permissions": [
+        "android.permission.CALL_PHONE",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./src/assets/images/favicon.png"
     },
-    "plugins": ["expo-router", "expo-font"],
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     },
