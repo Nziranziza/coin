@@ -12,7 +12,7 @@ import {
 import Button from "@/components/button";
 import VerificationCodeInput from "@/components/codeInput";
 import Text from "@/components/text";
-import { primaryColor } from "@/constants/Colors";
+import { colors } from "@/utils/tailwindcss";
 
 const isAndroid = Platform.OS === "android";
 
@@ -34,7 +34,7 @@ export default function Login() {
         <Text
           weight="700"
           className="text-[26px] mb-[30px]"
-          style={{ color: primaryColor }}
+          style={{ color: colors.primary[500] }}
         >
           Enter Your Phone number
         </Text>
@@ -48,7 +48,7 @@ export default function Login() {
           <Text
             weight="600"
             className="mb-[30px] self-center underline"
-            style={{ color: primaryColor }}
+            style={{ color: colors.primary[500] }}
           >
             Resend Code
           </Text>

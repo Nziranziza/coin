@@ -6,7 +6,7 @@ import { SafeAreaView, Platform, StatusBar, View } from "react-native";
 import Button from "@/components/button";
 import Text from "@/components/text";
 import TextInputWithLabel from "@/components/TextInput";
-import { primaryColor } from "@/constants/Colors";
+import { colors } from "@/utils/tailwindcss";
 
 const isAndroid = Platform.OS === "android";
 
@@ -28,7 +28,7 @@ export default function Login() {
         <Text
           weight="700"
           className="text-[26px] mb-[30px]"
-          style={{ color: primaryColor }}
+          style={{ color: colors.primary[500] }}
         >
           Enter Your Phone number
         </Text>

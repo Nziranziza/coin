@@ -16,6 +16,11 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 
 import "../../global.css";
 
+export const unstable_settings = {
+  // Ensure any route can link back to `/`
+  initialRouteName: "index",
+};
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -46,7 +51,10 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <View className="flex-1">
-        <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+        <StatusBar
+          style={colorScheme === "dark" ? "light" : "dark"}
+          translucent
+        />
         <Stack
           screenOptions={{
             headerShown: false,
@@ -55,6 +63,7 @@ export default function RootLayout() {
               backgroundColor: Colors[colorScheme ?? "light"].background,
             },
           }}
+          initialRouteName="(tabs)"
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="index" options={{ headerShown: false }} />
