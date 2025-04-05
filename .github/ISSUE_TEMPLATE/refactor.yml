@@ -1,0 +1,49 @@
+name: Refactor
+description: Propose code refactoring to improve code quality and maintainability
+title: "[REFAC] "
+labels: ["refactor"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to propose a refactoring!
+  - type: input
+    id: component
+    attributes:
+      label: Component to Refactor
+      description: Which part of the codebase needs refactoring?
+      placeholder: "e.g., authentication service, database layer, UI components"
+    validations:
+      required: true
+  - type: textarea
+    id: current-implementation
+    attributes:
+      label: Current Implementation
+      description: Describe the current implementation and its issues
+      placeholder: "Describe the current code structure and what problems it presents"
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-changes
+    attributes:
+      label: Proposed Refactoring
+      description: Describe your proposed refactoring approach
+      placeholder: "Describe how you would refactor this code and what improvements it would bring"
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact Analysis
+      description: What is the impact of this refactoring?
+      placeholder: "Describe the potential impact on other parts of the system, performance, and maintainability"
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true 

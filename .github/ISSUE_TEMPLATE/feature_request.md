@@ -1,7 +1,7 @@
 ---
 name: Feature Request
 about: Suggest an idea for the mobile app
-title: "[FEATURE] "
+title: "[FEAT] "
 labels: enhancement
 assignees: ""
 ---
