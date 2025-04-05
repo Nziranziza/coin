@@ -2,12 +2,13 @@ import { IconProps } from "phosphor-react-native";
 import React from "react";
 import { View } from "react-native";
 
-import { cn } from "@/utils/tailwindcss";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { colors, cn } from "@/utils/tailwindcss";
 
 import { PressableOpacity, PressableOpacityProps } from "./pressable-opacity";
 import Text from "./text";
 
-type ButtonProps = PressableOpacityProps & {
+export type ButtonProps = PressableOpacityProps & {
   title: string;
   icon?: React.ComponentType<IconProps>;
   iconPosition?: "left" | "right";
@@ -22,7 +23,7 @@ export default function Button({
   icon: Icon,
   iconPosition = "left",
   textClassName,
-  iconColor = "white",
+  iconColor,
   className,
   iconSize,
   size = "md",
@@ -31,6 +32,10 @@ export default function Button({
   const defaultIconSize = size === "sm" ? 16 : 24;
   const finalIconSize = iconSize ?? defaultIconSize;
   const isSmall = size === "sm";
+  const defaultIconColor = useThemeColor(
+    { light: colors.dark[50], dark: colors.dark[50] },
+    "text",
+  );
 
   return (
     <PressableOpacity
@@ -45,18 +50,30 @@ export default function Button({
     >
       {Icon && iconPosition === "left" && (
         <View className="mr-1.5">
-          <Icon weight="bold" size={finalIconSize} color={iconColor} />
+          <Icon
+            weight="bold"
+            size={finalIconSize}
+            color={iconColor ?? defaultIconColor}
+          />
         </View>
       )}
       <Text
         weight="600"
-        className={cn("text-white", { "text-sm": isSmall }, textClassName)}
+        className={cn(
+          "text-dark-50 dark:text-dark-50",
+          { "text-sm": isSmall },
+          textClassName,
+        )}
       >
         {title}
       </Text>
       {Icon && iconPosition === "right" && (
         <View className="ml-1.5">
-          <Icon weight="bold" size={finalIconSize} color={iconColor} />
+          <Icon
+            weight="bold"
+            size={finalIconSize}
+            color={iconColor ?? defaultIconColor}
+          />
         </View>
       )}
     </PressableOpacity>
