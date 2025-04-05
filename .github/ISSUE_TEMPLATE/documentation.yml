@@ -1,0 +1,41 @@
+name: Documentation
+description: Create a documentation issue to improve or add documentation
+title: "[DOCS] "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to help improve our documentation!
+  - type: input
+    id: what-needs-documentation
+    attributes:
+      label: What needs documentation?
+      description: Describe what part of the project needs documentation
+      placeholder: "e.g., API endpoints, setup process, configuration options"
+    validations:
+      required: true
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current Documentation State
+      description: Describe the current state of documentation (if any exists)
+      placeholder: "Describe what documentation currently exists and what's missing"
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-changes
+    attributes:
+      label: Proposed Documentation Changes
+      description: Describe what documentation you'd like to add or improve
+      placeholder: "Describe the documentation changes you'd like to make"
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true 
