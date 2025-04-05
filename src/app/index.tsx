@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FlatList, SafeAreaView, Platform, StatusBar } from "react-native";
 
 import Button from "@/components/button";
@@ -11,12 +11,22 @@ import {
   OnboardSlideData,
   onboadingSlidesData,
 } from "@/constants/onboarding-slides";
-
+import { settings } from "@/services/storage/settings";
 const isAndroid = Platform.OS === "android";
 
 export default function Onboard() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const flatListRef = useRef<FlatList<OnboardSlideData>>(null);
+
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      const onboardingStatus = await settings.getOnboardingStatus();
+      if (onboardingStatus?.completed) {
+        router.replace("/(tabs)");
+      }
+    };
+    checkOnboardingStatus();
+  }, []);
 
   const onNext = () => {
     if (currentIndex < onboadingSlidesData.length - 1) {
@@ -25,7 +35,11 @@ export default function Onboard() {
         animated: true,
       });
     } else {
-      router.replace("/phone");
+      settings.setOnboardingStatus({
+        completed: true,
+        lastCompleted: new Date().toISOString(),
+      });
+      router.replace("/(tabs)");
     }
   };
 
